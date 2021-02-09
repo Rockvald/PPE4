@@ -1,0 +1,15 @@
+{
+    "name": "gestionfournitures.mathieu",
+    "description": "Version mobile de l'application de gestion de fournitures des CCI",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Gestion Fournitures",
+    "hooks": {
+        "gestionfournitures": {
+            "apparmor": "gestionfournitures.apparmor",
+            "desktop":  "gestionfournitures.desktop"
+        }
+    },
+    "version": "1.0.0",
+    "maintainer": "Mathieu Prot <mathieuprot@orange.fr>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}
