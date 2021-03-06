@@ -14,6 +14,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+from requests import *
+from json import *
+
+
 def speak(text):
-    print(text)
+    reponse = get("http://localhost/PPE3/Application/server.php/api/service/{id}".format(id=text))
+    test = reponse.json()
+    text = test["service"]["nomService"]
     return text

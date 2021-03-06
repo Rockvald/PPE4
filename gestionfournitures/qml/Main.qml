@@ -16,58 +16,68 @@
 
 import QtQuick 2.7
 import Ubuntu.Components 1.3
-//import QtQuick.Controls 2.2
+import Ubuntu.Components.Popups 1.3
+import QtQuick.Controls.Suru 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import io.thp.pyotherside 1.3
+import io.thp.pyotherside 1.5
 
 MainView {
     id: root
     objectName: 'mainView'
     applicationName: 'gestionfournitures.mathieu'
-    automaticOrientation: true
+    // automaticOrientation: true
+    backgroundColor: '#e9e5dc'
 
-    width: units.gu(45)
+    width: phone ? units.gu(40) : units.gu(100)
     height: units.gu(75)
 
     Page {
+        id: page
         anchors.fill: parent
 
         header: PageHeader {
-            id: header
+            id: mainheader
+            StyleHints {
+                foregroundColor: '#c2c2c2'
+                backgroundColor: '#00062e'
+                dividerColor: '#00062e'
+            }
+
+            leadingActionBar.actions: [
+                Action {
+                    id: navigation_menu
+                    iconName: "navigation-menu"
+                    onTriggered: { menuLoader.active = true; root.backgroundColor = "#002c4a" }
+                }
+            ]
+
             title: i18n.tr('Gestion Fournitures')
+
+            trailingActionBar.actions: [
+                Action {
+                    iconName: "find"
+                    onTriggered: { print('Test') }
+                },
+                Action {
+                    iconName: "add"
+                    onTriggered: { print('Test') }
+                }
+            ]
         }
 
-        Label {
-            anchors {
-                top: header.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-            text: i18n.tr('Check the logs!')
-
-            verticalAlignment: Label.AlignVCenter
-            horizontalAlignment: Label.AlignHCenter
+        Loader {
+            id: pageLoader
+            anchors.fill: parent
+            source: ""
         }
     }
 
-    Python {
-        id: python
-
-        Component.onCompleted: {
-            addImportPath(Qt.resolvedUrl('../src/'));
-
-            importModule('example', function() {
-                console.log('module imported');
-                python.call('example.speak', ['Hello World!'], function(returnValue) {
-                    console.log('example.speak returned ' + returnValue);
-                })
-            });
-        }
-
-        onError: {
-            console.log('python error: ' + traceback);
-        }
+    Loader {
+        id: menuLoader
+        anchors.fill: parent
+        source: "pages/Menu.qml"
+        active: false
+        //visible: false
     }
 }
