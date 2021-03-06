@@ -29,8 +29,8 @@ MainView {
     // automaticOrientation: true
     backgroundColor: '#e9e5dc'
 
-    width: phone ? units.gu(40) : units.gu(100)
-    height: units.gu(75)
+    //width: phone ? units.gu(40) : units.gu(100)
+    //height: units.gu(75)
 
     Page {
         id: page
@@ -48,7 +48,7 @@ MainView {
                 Action {
                     id: navigation_menu
                     iconName: "navigation-menu"
-                    onTriggered: { menuLoader.active = true; root.backgroundColor = "#002c4a" }
+                    onTriggered: { menuLoader.active = true; root.backgroundColor = "#002239" }
                 }
             ]
 
@@ -69,7 +69,7 @@ MainView {
         Loader {
             id: pageLoader
             anchors.fill: parent
-            source: ""
+            source: "pages/Connexion.qml"
         }
     }
 
@@ -78,6 +78,5 @@ MainView {
         anchors.fill: parent
         source: "pages/Menu.qml"
         active: false
-        //visible: false
     }
 }

@@ -7,11 +7,7 @@ import Qt.labs.settings 1.0
 import io.thp.pyotherside 1.5
 
 ListItem {
-    divider {
-        visible: true
-        colorFrom: "#aaaaaa"
-        colorTo: "#aaaaaa"
-    }
+    divider.visible: false
     height: units.gu(6)
     highlightColor: UbuntuColors.red
 
