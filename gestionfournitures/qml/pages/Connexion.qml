@@ -14,7 +14,7 @@ Column {
 
     Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width - units.gu(11)
+        width: units.gu(33)
         height: units.gu(26)
         color: "#dd8500"
         radius: units.gu(2)
@@ -35,7 +35,10 @@ Column {
                     text: i18n.tr('Adresse mail')
                 }
 
-                TextField {}
+                TextField {
+                    id: mailTexfield
+                    text: ""
+                }
             }
 
             Column {
@@ -46,17 +49,50 @@ Column {
                     text: i18n.tr('Mot de passe')
                 }
 
-                TextField {}
+                TextField {
+                    id: mdpTextfield
+                    echoMode: TextInput.Password
+                    text: ""
+                }
             }
 
             Column {
-                id: connexion
+                id: boutonconnexion
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Button {
                     text: "Se connecter"
                     color: "#eae9e7"
-                    onClicked: print('Test')
+                    onClicked: {
+                        connexion.seconnecter(mailTexfield.text, mdpTextfield.text)
+                        mailTexfield.text = ""
+                        mdpTextfield.text = ""
+                    }
+                }
+            }
+
+            Python {
+                id: connexion
+
+                function seconnecter(mail, mdp) {
+                    addImportPath(Qt.resolvedUrl('../../src/'));
+
+                    importModule('connexion', function () {
+                        call('connexion.connexion', [mail, mdp], function (returnValue) {
+                            if (returnValue['connecter'] == true) {
+                                print(returnValue['erreur'])
+                                mainheader.title = i18n.tr("Accueil")
+                                pageLoader.source = "Accueil.qml"
+                                navigation_menu.visible = true
+                                recherche.visible = true
+                                ajouter.visible = true
+                            }
+                        })
+                    });
+                }
+
+                onError: {
+                    console.log('python error: ' + traceback);
                 }
             }
         }

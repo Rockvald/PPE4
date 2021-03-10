@@ -17,8 +17,8 @@ ListItem {
     }
 
     onClicked: {
-        pageLoader.source = model.url
         mainheader.title = i18n.tr(model.nom)
+        pageLoader.source = model.url
         menuLoader.active = false
         root.backgroundColor = "#e9e5dc"
     }

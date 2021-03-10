@@ -56,10 +56,12 @@ MainView {
 
             trailingActionBar.actions: [
                 Action {
+                    id: recherche
                     iconName: "find"
                     onTriggered: { print('Test') }
                 },
                 Action {
+                    id: ajouter
                     iconName: "add"
                     onTriggered: { print('Test') }
                 }
@@ -69,7 +71,7 @@ MainView {
         Loader {
             id: pageLoader
             anchors.fill: parent
-            source: "pages/Connexion.qml"
+            source: ""
         }
     }
 
@@ -78,5 +80,32 @@ MainView {
         anchors.fill: parent
         source: "pages/Menu.qml"
         active: false
+    }
+
+    Python {
+        id: verifconnexion
+
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('../src/'));
+
+            importModule('connexion', function() {
+                verifconnexion.call('connexion.verifconnexion', [], function(returnValue) {
+                    if (returnValue['connecter'] == true) {
+                        mainheader.title = i18n.tr("Accueil")
+                        pageLoader.source = "pages/Accueil.qml"
+                    } else {
+                        mainheader.title = i18n.tr("Connexion")
+                        pageLoader.source = "pages/Connexion.qml"
+                        navigation_menu.visible = false
+                        recherche.visible = false
+                        ajouter.visible = false
+                    }
+                })
+            });
+        }
+
+        onError: {
+            console.log('python error: ' + traceback);
+        }
     }
 }

@@ -28,6 +28,17 @@ Page {
         ]
 
         title: i18n.tr('Menu')
+
+        trailingActionBar.actions: [
+            Action {
+                iconName: "system-log-out"
+                onTriggered: { deconnexion.sedeconnecter() }
+            },
+            Action {
+                iconName: "account"
+                onTriggered: { print('Test') }
+            }
+        ]
     }
 
     ScrollView {
@@ -40,6 +51,33 @@ Page {
 
             model: Models.MenuModel { }
             delegate: Components.MenuLayout { }
+        }
+    }
+
+    Python {
+        id: deconnexion
+
+        function sedeconnecter() {
+            addImportPath(Qt.resolvedUrl('../../src/'));
+
+            importModule('connexion', function () {
+                call('connexion.deconnexion', [], function (returnValue) {
+                    if (returnValue['deconnecter'] == true) {
+                        print(returnValue['erreur'])
+                        mainheader.title = i18n.tr("Connexion")
+                        pageLoader.source = "Connexion.qml"
+                        menuLoader.active = false
+                        root.backgroundColor = "#e9e5dc"
+                        navigation_menu.visible = false
+                        recherche.visible = false
+                        ajouter.visible = false
+                    }
+                })
+            });
+        }
+
+        onError: {
+            console.log('python error: ' + traceback);
         }
     }
 }
