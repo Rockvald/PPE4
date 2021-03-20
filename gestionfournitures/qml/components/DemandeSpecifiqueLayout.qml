@@ -63,7 +63,15 @@ ListItem {
                         width: units.gu(30)
                         horizontalAlignment: Text.AlignHCenter
                         wrapMode: Text.Wrap
-                        text: model.lienProduit
+                        textFormat: Text.RichText
+                        text: {
+                            if (model.lienProduit == "Aucun lien fourni") {
+                                return model.lienProduit;
+                            } else {
+                                return "<a href=" + model.lienProduit + ">" + model.lienProduit + "</a>";
+                            }
+                        }
+                        onLinkActivated: Qt.openUrlExternally(model.lienProduit)
                     }
                 }
                 Column {
