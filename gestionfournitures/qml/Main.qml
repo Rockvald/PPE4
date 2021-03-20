@@ -48,7 +48,7 @@ MainView {
                 Action {
                     id: navigation_menu
                     iconName: "navigation-menu"
-                    onTriggered: { menuLoader.active = true; root.backgroundColor = "#002239" }
+                    onTriggered: { menuLoader.active = true }
                 }
             ]
 
@@ -58,7 +58,7 @@ MainView {
                 Action {
                     id: recherche
                     iconName: "find"
-                    onTriggered: { print('Test') }
+                    onTriggered: { PopupUtils.open(dialogue) }
                 },
                 Action {
                     id: ajouter
@@ -66,6 +66,24 @@ MainView {
                     onTriggered: { print('Test') }
                 }
             ]
+        }
+
+        Component {
+            id: dialogue
+            Dialog {
+                id: fenetre
+                style: Rectangle {
+                    color: "#dd8500"
+                    radius: 5
+                }
+                title: "Recherche"
+                TextField {}
+                Button {
+                    text: "Rechercher"
+                    color: "#eae9e7"
+                    onClicked: PopupUtils.close(fenetre)
+                }
+            }
         }
 
         Loader {

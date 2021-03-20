@@ -7,6 +7,7 @@ import Qt.labs.settings 1.0
 import io.thp.pyotherside 1.5
 
 Column {
+    id: colonnePrincipale
     anchors {
         top: parent.top
         topMargin: mainheader.height + units.gu(15)
@@ -81,6 +82,7 @@ Column {
                         call('connexion.connexion', [mail, mdp], function (returnValue) {
                             if (returnValue['connecter'] == true) {
                                 print(returnValue['erreur'])
+                                colonnePrincipale.anchors.top = undefined
                                 mainheader.title = i18n.tr("Accueil")
                                 pageLoader.source = "Accueil.qml"
                                 navigation_menu.visible = true

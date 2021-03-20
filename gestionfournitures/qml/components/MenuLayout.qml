@@ -14,12 +14,12 @@ ListItem {
     ListItemLayout {
         anchors.fill: parent
         title.text: model.nom
+        title.color: "#c2c2c2"
     }
 
     onClicked: {
-        mainheader.title = i18n.tr(model.nom)
+        mainheader.title = model.nom
         pageLoader.source = model.url
         menuLoader.active = false
-        root.backgroundColor = "#e9e5dc"
     }
 }
