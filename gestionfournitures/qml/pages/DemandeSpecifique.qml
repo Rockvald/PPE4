@@ -13,11 +13,28 @@ ScrollView {
     id: pagescrollview
     anchors.fill: parent
 
-    /*ListView {
+    ListView {
+        id: demandeSpecifiqueListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
 
+        property var contenu
+
         model: Models.DemandeSpecifiqueModel { }
         delegate: Components.DemandeSpecifiqueLayout { }
-    }*/
+
+        Python {
+            id: recupcontenu
+            Component.onCompleted: {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+
+                importModule('demandespecifique', function () {
+                    call('demandespecifique.recupDonnee', [], function (returnValue) {
+                        demandeSpecifiqueListview.contenu = returnValue
+                        demandeSpecifiqueListview.model.ajouter(demandeSpecifiqueListview.contenu)
+                    })
+                });
+            }
+        }
+    }
 }

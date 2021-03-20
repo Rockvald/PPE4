@@ -10,14 +10,21 @@ import "../components" as Components
 import "../models" as Models
 
 ScrollView {
-    id: pagescrollview
     anchors.fill: parent
 
-    /*ListView {
+    ListView {
+        id: accueilListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
 
-        model: Models.AccueilModel { }
-        delegate: Components.AccueilLayout { }
-    }*/
+        property var contenu: [{"nom": "https://dactylbureau-calipage.fournituredebureau.com/Detail.aspx?ProductId=4315838", "description": "Test"}, {"nom": "Teste", "description": "5"}]
+
+        model: Models.AccueilModel {}
+        delegate: Components.AccueilLayout {}
+
+        Python {
+            id: recupcontenu
+            Component.onCompleted: accueilListview.model.ajouter(accueilListview.contenu)
+        }
+    }
 }
