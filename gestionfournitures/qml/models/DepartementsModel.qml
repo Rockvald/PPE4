@@ -12,6 +12,8 @@ ListModel {
         identifiant: ""
         nomService: ""
         descriptionService: ""
+        nomValideur: ""
+        contactValideur: ""
         created_at: ""
         updated_at: ""
     }
@@ -19,5 +21,6 @@ ListModel {
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         departementsModel.append(contenu)
+        departementsModel.remove(0)
     }
 }

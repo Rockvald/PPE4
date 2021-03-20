@@ -13,11 +13,28 @@ ScrollView {
     id: pagescrollview
     anchors.fill: parent
 
-    /*ListView {
+    ListView {
+        id: departementsListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
 
+        property var contenu
+
         model: Models.DepartementsModel { }
         delegate: Components.DepartementsLayout { }
-    }*/
+
+        Python {
+            id: recupcontenu
+            Component.onCompleted: {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+
+                importModule('departements', function () {
+                    call('departements.recupDonnee', [], function (returnValue) {
+                        departementsListview.contenu = returnValue
+                        departementsListview.model.ajouter(departementsListview.contenu)
+                    })
+                });
+            }
+        }
+    }
 }
