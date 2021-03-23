@@ -43,6 +43,9 @@ def recupDonnee():
         if donnee_enregistre["idService"] == service["id"]:
             servicePersonnel.append(service)
 
+    servicePersonnel[0]["nomValideur"] = "Aucun"
+    servicePersonnel[0]["contactValideur"] = "N/A"
+
     for personnel in personnels["data"]:
         if servicePersonnel[0]["id"] == personnel["idService"] and personnel["idCategorie"] == 2:
             servicePersonnel[0]["nomValideur"] = personnel["nom"] + " " + personnel["prenom"]
