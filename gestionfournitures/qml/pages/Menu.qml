@@ -103,7 +103,6 @@ Page {
             importModule('connexion', function () {
                 call('connexion.deconnexion', [], function (returnValue) {
                     if (returnValue['deconnecter'] == true) {
-                        print(returnValue['erreur'])
                         mainheader.title = i18n.tr("Connexion")
                         pageLoader.source = "Connexion.qml"
                         menuLoader.active = false

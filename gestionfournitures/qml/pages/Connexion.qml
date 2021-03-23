@@ -10,10 +10,39 @@ Column {
     id: colonnePrincipale
     anchors {
         top: parent.top
-        topMargin: mainheader.height + units.gu(15)
+        topMargin: mainheader.height
+    }
+    spacing: units.gu(14)
+    Text { text: " " }
+
+    Rectangle {
+        id: messageErreur
+        visible: false
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: units.gu(33)
+        height: units.gu(4)
+        color: "#ee0000"
+        radius: units.gu(1)
+        property string url: "localhost"
+        Row {
+            anchors.centerIn: parent
+            spacing: units.gu(2)
+            Image {
+                source: "http://" + messageErreur.url + "/PPE3/Application/storage/app/public/warning.png"
+                width: units.gu(2)
+                height: units.gu(2)
+                verticalAlignment: Image.AlignVCenter
+            }
+            Text {
+                id: message
+                horizontalAlignment: Text.AlignHCenter
+                text: ""
+            }
+        }
     }
 
     Rectangle {
+        id: rectConnexion
         anchors.horizontalCenter: parent.horizontalCenter
         width: units.gu(33)
         height: units.gu(26)
@@ -75,19 +104,29 @@ Column {
             Python {
                 id: connexion
 
-                function seconnecter(mail, mdp) {
+                Component.onCompleted: {
                     addImportPath(Qt.resolvedUrl('../../src/'));
+                    importModule('connexion', function () {
+                        call('connexion.recupUrl', [], function (returnValue) {
+                            messageErreur.url = returnValue
+                        })
+                    });
+                }
 
+                function seconnecter(mail, mdp) {
                     importModule('connexion', function () {
                         call('connexion.connexion', [mail, mdp], function (returnValue) {
                             if (returnValue['connecter'] == true) {
-                                print(returnValue['erreur'])
                                 colonnePrincipale.anchors.top = undefined
                                 mainheader.title = i18n.tr("Accueil")
                                 pageLoader.source = "Accueil.qml"
                                 navigation_menu.visible = true
                                 recherche.visible = true
                                 ajouter.visible = true
+                            } else {
+                                colonnePrincipale.spacing = units.gu(5)
+                                messageErreur.visible = true
+                                message.text = returnValue['erreur']
                             }
                         })
                     });

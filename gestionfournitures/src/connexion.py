@@ -45,7 +45,7 @@ def connexion(mail, mdp):
         return {"connecter": connecter, "erreur": erreur}
     else:
         connecter = False
-        erreur = "Les mots de passe ne correspondes pas !"
+        erreur = "Le mot de passe est incorrect !"
         return {"connecter": connecter, "erreur": erreur}
 
 def verifconnexion():
@@ -94,6 +94,10 @@ def deconnexion():
         deconnecter = False
         erreur = "Le fichier n'éxiste pas ou est un dossier"
         return {"deconnecter": deconnecter, "erreur": erreur}
+
+
+def recupUrl():
+    return url
 
 
 os.chdir("src")
