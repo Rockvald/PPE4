@@ -17,6 +17,7 @@ ScrollView {
         id: demandeSpecifiqueListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
+        visible: true
 
         property var contenu
 
@@ -30,11 +31,30 @@ ScrollView {
 
                 importModule('demandespecifique', function () {
                     call('demandespecifique.recupDonnee', [], function (returnValue) {
-                        demandeSpecifiqueListview.contenu = returnValue
-                        demandeSpecifiqueListview.model.ajouter(demandeSpecifiqueListview.contenu)
+                        if (returnValue["aucunneDonnee"]) {
+                            demandeSpecifiqueListview.visible = false
+                            aucunneDonneeListview.visible = true
+                            aucunneDonneeListview.contenu = returnValue["demandespersonnel"]
+                            aucunneDonneeListview.model.ajouter(aucunneDonneeListview.contenu)
+                        } else {
+                            demandeSpecifiqueListview.contenu = returnValue["demandespersonnel"]
+                            demandeSpecifiqueListview.model.ajouter(demandeSpecifiqueListview.contenu)
+                        }
                     })
                 });
             }
         }
+    }
+
+    ListView {
+        id: aucunneDonneeListview
+        anchors.top: parent.top
+        anchors.topMargin: mainheader.height
+        visible: false
+
+        property var contenu
+
+        model: Models.AucunneDonneeModel { }
+        delegate: Components.AucunneDonneeLayout { }
     }
 }

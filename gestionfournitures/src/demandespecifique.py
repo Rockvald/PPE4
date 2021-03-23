@@ -21,12 +21,14 @@ import pickle
 
 def recupDonnee():
     demandespersonnel = []
+    aucunneDonnee = False
     try:
         reponse = requests.get("http://{url}/PPE3/Application/server.php/api/liste/demandes".format(url = url))
         demandespecifique = reponse.json()
     except:
         erreur = "Données non trouvé"
-        return erreur
+        aucunneDonnee = True
+        return {"erreur": erreur, "aucunneDonnee": aucunneDonnee}
 
     for donnee in demandespecifique["data"]:
         try:
@@ -45,7 +47,11 @@ def recupDonnee():
         if donnee_enregistre["id"] == donnee["idPersonnel"]:
             demandespersonnel.append(donnee)
 
-    return demandespersonnel
+    if demandespersonnel == []:
+        aucunneDonnee = True
+        demandespersonnel.append({"titre": "Demandes spécifiques :", "description": "Vous n'avez pas encore effectué de demandes."})
+
+    return {"demandespersonnel": demandespersonnel, "aucunneDonnee": aucunneDonnee}
 
 
 #os.chdir("src")
