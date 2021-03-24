@@ -9,13 +9,13 @@ import io.thp.pyotherside 1.5
 ListModel {
     id: suiviModel
     ListElement {
-        identifiant: ""
-        idEtat: ""
+        identifiant: 0
+        idEtat: 0
         nomEtat: ""
-        idFourniture: ""
-        idPersonnel: ""
-        nomCommande: ""
-        quantiteDemande: ""
+        idFournitures: 0
+        idPersonnel: 0
+        nomCommandes: ""
+        quantiteDemande: 0
         created_at: ""
         updated_at: ""
     }
@@ -23,5 +23,6 @@ ListModel {
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         suiviModel.append(contenu)
+        suiviModel.remove(0)
     }
 }

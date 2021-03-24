@@ -13,11 +13,50 @@ ScrollView {
     id: pagescrollview
     anchors.fill: parent
 
-    /*ListView {
+    ListView {
+        id: suiviListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
+        visible: true
+
+        property var contenu
 
         model: Models.SuiviModel { }
         delegate: Components.SuiviLayout { }
-    }*/
+
+        Python {
+            Component.onCompleted: {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('suivi', function () {
+                    call('suivi.recupDonnee', [], function (returnValue) {
+                        if (returnValue["aucunneDonnee"]) {
+                            suiviListview.visible = false
+                            aucunneDonneeListview.visible = true
+                            aucunneDonneeListview.contenu = returnValue["commandespersonnel"]
+                            aucunneDonneeListview.model.ajouter(aucunneDonneeListview.contenu)
+                        } else {
+                            suiviListview.contenu = returnValue["commandespersonnel"]
+                            suiviListview.model.ajouter(suiviListview.contenu)
+                        }
+                    })
+                });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
+            }
+        }
+    }
+
+    ListView {
+        id: aucunneDonneeListview
+        anchors.top: parent.top
+        anchors.topMargin: mainheader.height
+        visible: false
+
+        property var contenu
+
+        model: Models.AucunneDonneeModel { }
+        delegate: Components.AucunneDonneeLayout { }
+    }
 }
