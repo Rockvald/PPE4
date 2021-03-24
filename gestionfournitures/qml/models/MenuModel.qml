@@ -28,7 +28,7 @@ ListModel {
         url: "../pages/Suivi.qml"
     }
     ListElement {
-        nom: "Personnalisation"
+        nom: "Personnalisation du compte"
         url: "../pages/Personnalisation.qml"
     }
 }

@@ -25,10 +25,8 @@ ScrollView {
         delegate: Components.DemandeSpecifiqueLayout { }
 
         Python {
-            id: recupcontenu
             Component.onCompleted: {
                 addImportPath(Qt.resolvedUrl('../../src/'));
-
                 importModule('demandespecifique', function () {
                     call('demandespecifique.recupDonnee', [], function (returnValue) {
                         if (returnValue["aucunneDonnee"]) {
@@ -42,6 +40,10 @@ ScrollView {
                         }
                     })
                 });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
             }
         }
     }

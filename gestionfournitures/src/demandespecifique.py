@@ -39,6 +39,7 @@ def recupDonnee():
             return erreur
 
         donnee["nomEtat"] = etat["etat"]["nomEtat"]
+        donnee["identifiant"] = donnee["id"]
 
         with open("data", "rb") as data:
             donnees_unpickle = pickle.Unpickler(data)

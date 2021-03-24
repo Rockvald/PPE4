@@ -12,8 +12,8 @@ Column {
         top: parent.top
         topMargin: mainheader.height
     }
-    spacing: units.gu(14)
-    Text { text: " " }
+    topPadding: units.gu(16)
+    spacing: units.gu(6)
 
     Rectangle {
         id: messageErreur
@@ -103,7 +103,6 @@ Column {
 
             Python {
                 id: connexion
-
                 Component.onCompleted: {
                     addImportPath(Qt.resolvedUrl('../../src/'));
                     importModule('connexion', function () {
@@ -122,9 +121,8 @@ Column {
                                 pageLoader.source = "Accueil.qml"
                                 navigation_menu.visible = true
                                 recherche.visible = true
-                                ajouter.visible = true
                             } else {
-                                colonnePrincipale.spacing = units.gu(5)
+                                colonnePrincipale.topPadding = units.gu(6)
                                 messageErreur.visible = true
                                 message.text = returnValue['erreur']
                             }

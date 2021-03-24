@@ -75,10 +75,14 @@ def verifconnexion():
 
     # Vérification des mots de passes
     if mdp_enregistre == mdp_utilisateur:
+        with open("data", "wb") as data:
+            donnee = pickle.Pickler(data)
+            donnee.dump(donneePersonnel)
         connecter = True
         erreur = "Aucune"
         return {"connecter": connecter, "erreur": erreur}
     else:
+        os.remove("data")
         connecter = False
         erreur = "Les mots de passe ne correspondes pas !"
         return {"connecter": connecter, "erreur": erreur}

@@ -7,11 +7,7 @@ import Qt.labs.settings 1.0
 import io.thp.pyotherside 1.5
 
 ListItem {
-    divider {
-        visible: false
-        //colorFrom: "#dd8500"
-        //colorTo: "#dd8500"
-    }
+    divider.visible: false
     height: units.gu(6)
     highlightColor: "#dd8500"
 

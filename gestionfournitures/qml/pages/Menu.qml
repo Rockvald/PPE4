@@ -80,7 +80,6 @@ Page {
             }
 
             Python {
-                id: recupdonneepersonnel
                 Component.onCompleted: {
                     addImportPath(Qt.resolvedUrl('../../src/'));
                     importModule('accueil', function () {
@@ -93,13 +92,10 @@ Page {
         }
     }
 
-
     Python {
         id: deconnexion
-
         function sedeconnecter() {
             addImportPath(Qt.resolvedUrl('../../src/'));
-
             importModule('connexion', function () {
                 call('connexion.deconnexion', [], function (returnValue) {
                     if (returnValue['deconnecter'] == true) {
@@ -108,7 +104,6 @@ Page {
                         menuLoader.active = false
                         navigation_menu.visible = false
                         recherche.visible = false
-                        ajouter.visible = false
                     }
                 })
             });
