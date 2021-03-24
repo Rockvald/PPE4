@@ -9,18 +9,21 @@ import io.thp.pyotherside 1.5
 ListModel {
     id: fournituresModel
     ListElement {
-        identifiant: ""
-        idFamille: ""
-        nomFourniture: ""
+        identifiant: 0
         nomPhoto: ""
-        descriptionFourniture: ""
-        quantiteDisponible: ""
-        created_at: ""
-        updated_at: ""
+        nomFournitures: ""
+        descriptionFournitures: ""
+        nomFamille: ""
+        quantiteDisponible: 0
     }
 
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         fournituresModel.append(contenu)
+        fournituresModel.remove(0)
+    }
+
+    function modifier(index, nom, valeur) {
+        fournituresModel.setProperty(index, nom, valeur)
     }
 }

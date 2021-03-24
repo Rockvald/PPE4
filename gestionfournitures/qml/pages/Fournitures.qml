@@ -13,11 +13,48 @@ ScrollView {
     id: pagescrollview
     anchors.fill: parent
 
-    /*ListView {
+    ListView {
+        id: fournituresListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
 
-        model: Models.FournituresModel { }
-        delegate: Components.FournituresLayout { }
-    }*/
+        property string url: "localhost"
+        property var contenu: []
+
+        model: Models.FournituresModel {}
+        delegate: Components.FournituresLayout {}
+
+        Python {
+            id: python
+            Component.onCompleted: {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('connexion', function () {
+                    call('connexion.recupUrl', [], function (returnValue) {
+                        fournituresListview.url = returnValue
+                    })
+                });
+
+                importModule('fournitures', function () {
+                    call('fournitures.recupDonnee', [], function (returnValue) {
+                        fournituresListview.contenu = returnValue
+                        fournituresListview.model.ajouter(fournituresListview.contenu)
+                    })
+                });
+            }
+
+            function commander(idFournitures, nomFournitures, quantiteDemande, quantiteDisponible, index) {
+                importModule('commande', function () {
+                    call('commande.commander', [idFournitures, nomFournitures, quantiteDemande, quantiteDisponible, index], function (returnValue) {
+                        fournituresListview.model.modifier(returnValue["index"], "quantiteDisponible", returnValue["quantiteDisponible"])
+                        page.message = returnValue['message']
+                        PopupUtils.open(fenetreMessage)
+                    })
+                });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
+            }
+        }
+    }
 }
