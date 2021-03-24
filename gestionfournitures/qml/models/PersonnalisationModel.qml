@@ -9,9 +9,9 @@ import io.thp.pyotherside 1.5
 ListModel {
     id: personnalisationModel
     ListElement {
-        identifiant: ""
-        idCategorie: ""
-        idService: ""
+        identifiant: 0
+        idCategorie: 0
+        idService: 0
         nom: ""
         prenom: ""
         mail: ""
@@ -24,5 +24,6 @@ ListModel {
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         personnalisationModel.append(contenu)
+        personnalisationModel.remove(0)
     }
 }
