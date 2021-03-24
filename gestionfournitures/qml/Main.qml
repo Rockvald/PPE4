@@ -58,18 +58,15 @@ MainView {
                 Action {
                     id: recherche
                     iconName: "find"
-                    onTriggered: { PopupUtils.open(dialogue) }
-                },
-                Action {
-                    id: ajouter
-                    iconName: "add"
-                    onTriggered: { print('Test') }
+                    onTriggered: { PopupUtils.open(fenetreRecherche) }
                 }
             ]
         }
 
+        property string message: "Essai"
+
         Component {
-            id: dialogue
+            id: fenetreRecherche
             Dialog {
                 id: fenetre
                 style: Rectangle {
@@ -80,6 +77,32 @@ MainView {
                 TextField {}
                 Button {
                     text: "Rechercher"
+                    color: "#eae9e7"
+                    onClicked: PopupUtils.close(fenetre)
+                }
+                Button {
+                    text: "Fermer"
+                    color: "#eae9e7"
+                    onClicked: PopupUtils.close(fenetre)
+                }
+            }
+        }
+
+        Component {
+            id: fenetreMessage
+            Dialog {
+                id: fenetre
+                style: Rectangle {
+                    color: "#dd8500"
+                    radius: 5
+                }
+                Text {
+                    id: textMessage
+                    horizontalAlignment: Text.AlignHCenter
+                    text: page.message
+                }
+                Button {
+                    text: "Valider"
                     color: "#eae9e7"
                     onClicked: PopupUtils.close(fenetre)
                 }
@@ -116,7 +139,6 @@ MainView {
                         pageLoader.source = "pages/Connexion.qml"
                         navigation_menu.visible = false
                         recherche.visible = false
-                        ajouter.visible = false
                     }
                 })
             });
