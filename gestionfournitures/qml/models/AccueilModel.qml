@@ -10,13 +10,11 @@ ListModel {
     id: accueilModel
     ListElement {
         message: ""
-        nom: ""
-        description: ""
-        quantiteDisponible: ""
     }
 
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         accueilModel.append(contenu)
+        accueilModel.remove(0)
     }
 }

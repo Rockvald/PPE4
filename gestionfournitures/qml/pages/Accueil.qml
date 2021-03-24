@@ -16,15 +16,25 @@ ScrollView {
         id: accueilListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-
-        property var contenu: [{"nom": "https://dactylbureau-calipage.fournituredebureau.com/Detail.aspx?ProductId=4315838", "description": "Test"}, {"nom": "Teste", "description": "5"}]
+        property var contenu
 
         model: Models.AccueilModel {}
         delegate: Components.AccueilLayout {}
 
         Python {
-            id: recupcontenu
-            Component.onCompleted: accueilListview.model.ajouter(accueilListview.contenu)
+            Component.onCompleted: {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('accueil', function () {
+                    call('accueil.donneePersonnel', [], function (returnValue) {
+                        accueilListview.contenu = {"message": returnValue["message"]}
+                        accueilListview.model.ajouter(accueilListview.contenu)
+                    })
+                });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
+            }
         }
     }
 }
