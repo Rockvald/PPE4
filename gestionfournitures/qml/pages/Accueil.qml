@@ -16,18 +16,31 @@ ScrollView {
         id: accueilListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
+
+        property string url: "localhost"
         property var contenu
 
         model: Models.AccueilModel {}
         delegate: Components.AccueilLayout {}
 
         Python {
+            id: python
             Component.onCompleted: {
                 addImportPath(Qt.resolvedUrl('../../src/'));
                 importModule('accueil', function () {
-                    call('accueil.donneePersonnel', [], function (returnValue) {
-                        accueilListview.contenu = {"message": returnValue["message"]}
+                    call('accueil.recupDonnee', [], function (returnValue) {
+                        accueilListview.contenu = returnValue
                         accueilListview.model.ajouter(accueilListview.contenu)
+                    })
+                });
+            }
+
+            function commander(idFournitures, nomFournitures, quantiteDemande, quantiteDisponible, index) {
+                importModule('commande', function () {
+                    call('commande.commander', [idFournitures, nomFournitures, quantiteDemande, quantiteDisponible, index], function (returnValue) {
+                        accueilListview.model.modifier(returnValue["index"], "quantiteDisponible", returnValue["quantiteDisponible"])
+                        page.message = returnValue['message']
+                        PopupUtils.open(fenetreMessage)
                     })
                 });
             }

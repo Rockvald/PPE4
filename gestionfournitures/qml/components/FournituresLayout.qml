@@ -100,7 +100,7 @@ ListItem {
                         minimumValue: 1
                         maximumValue: model.quantiteDisponible
                         value: 1
-                        stepSize: 2.5
+                        stepSize: 1
                     }
                 }
 

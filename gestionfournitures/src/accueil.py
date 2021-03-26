@@ -18,6 +18,8 @@ import requests
 import json
 import os
 import pickle
+import fournitures
+from random import randint
 
 def donneePersonnel():
     with open("data", "rb") as data:
@@ -44,6 +46,24 @@ def donneePersonnel():
     return donnee_enregistre
 
 
+def recupDonnee():
+    donnee = []
+    donnee_personnel = donneePersonnel()
+    listeFournitures = fournitures.recupDonnee()
+
+    generer = False
+    while generer == False:
+        index = randint(0, len(listeFournitures)-1)
+        if listeFournitures[index]["quantiteDisponible"] > 0:
+            listeFournitures[index]["nom"] = donnee_personnel["nom"]
+            listeFournitures[index]["prenom"] = donnee_personnel["prenom"]
+            listeFournitures[index]["message"] = donnee_personnel["message"]
+            donnee.append(listeFournitures[index])
+            generer = True
+
+    return donnee
+
+
 #os.chdir("src")
 with open("env.json", "r") as env:
     donnee = json.load(env)
@@ -51,5 +71,8 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    donneePersonnel = donneePersonnel()
-    print(donneePersonnel)
+    donnee_Personnel = donneePersonnel()
+    print(donnee_Personnel)
+
+    recupDonnee = recupDonnee()
+    print(recupDonnee)

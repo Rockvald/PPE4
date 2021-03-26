@@ -9,12 +9,24 @@ import io.thp.pyotherside 1.5
 ListModel {
     id: accueilModel
     ListElement {
+        nom: ""
+        prenom: ""
         message: ""
+        identifiant: 0
+        nomPhoto: ""
+        nomFournitures: ""
+        descriptionFournitures: ""
+        nomFamille: ""
+        quantiteDisponible: 0
     }
 
     function ajouter(contenuAajouter) {
         var contenu = contenuAajouter
         accueilModel.append(contenu)
         accueilModel.remove(0)
+    }
+
+    function modifier(index, nom, valeur) {
+        fournituresModel.setProperty(index, nom, valeur)
     }
 }
