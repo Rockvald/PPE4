@@ -32,6 +32,8 @@ MainView {
     //width: phone ? units.gu(40) : units.gu(100)
     //height: units.gu(75)
 
+    property string elementArechercher
+
     Page {
         id: page
         anchors.fill: parent
@@ -74,11 +76,18 @@ MainView {
                     radius: 5
                 }
                 title: "Recherche"
-                TextField {}
+                TextField {
+                    id: rechercheTextfield
+                    text: ""
+                }
                 Button {
                     text: "Rechercher"
                     color: "#eae9e7"
-                    onClicked: PopupUtils.close(fenetre)
+                    onClicked: {
+                        root.elementArechercher = rechercheTextfield.text
+                        rechercheLoader.active = true
+                        PopupUtils.close(fenetre)
+                    }
                 }
                 Button {
                     text: "Fermer"
@@ -120,6 +129,13 @@ MainView {
         id: menuLoader
         anchors.fill: parent
         source: "pages/Menu.qml"
+        active: false
+    }
+
+    Loader {
+        id: rechercheLoader
+        anchors.fill: parent
+        source: "pages/Recherche.qml"
         active: false
     }
 

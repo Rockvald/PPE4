@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gestionfournitures.mathieu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-24 17:24+0000\n"
+"POT-Creation-Date: 2021-03-26 15:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:55 gestionfournitures.desktop.in.h:1
+#: ../qml/Main.qml:57 gestionfournitures.desktop.in.h:1
 msgid "Gestion Fournitures"
 msgstr ""
 
-#: ../qml/Main.qml:135 ../qml/pages/Connexion.qml:120
+#: ../qml/Main.qml:151 ../qml/pages/Connexion.qml:120
 msgid "Accueil"
 msgstr ""
 
-#: ../qml/Main.qml:138 ../qml/pages/Menu.qml:102
+#: ../qml/Main.qml:154 ../qml/pages/Menu.qml:102
 msgid "Connexion"
 msgstr ""
 
