@@ -61,5 +61,5 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    commander = commander(2, "Stylo bic cristal vert", 3, 9, 3)
-    print(commander)
+    test_commander = commander(2, "Stylo bic cristal vert", 3, 9, 3)
+    print(test_commander)

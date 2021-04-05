@@ -82,8 +82,8 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    recupDonnee = recupDonnee()
-    print(recupDonnee)
+    test_recupDonnee = recupDonnee()
+    print(test_recupDonnee)
 
-    modifier = modifier(1, "Admin", "Admin", "admin@admin.fr", "admin", "admin")
-    print(modifier)
+    test_modifier = modifier(1, "Admin", "Admin", "admin@admin.fr", "admin", "admin")
+    print(test_modifier)

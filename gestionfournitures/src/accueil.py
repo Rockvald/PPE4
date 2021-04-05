@@ -71,8 +71,8 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    donnee_Personnel = donneePersonnel()
-    print(donnee_Personnel)
+    test_donneePersonnel = donneePersonnel()
+    print(test_donneePersonnel)
 
-    recupDonnee = recupDonnee()
-    print(recupDonnee)
+    test_recupDonnee = recupDonnee()
+    print(test_recupDonnee)

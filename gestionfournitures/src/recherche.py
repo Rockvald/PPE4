@@ -42,5 +42,5 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    rechercher = rechercher("stylo")
-    print(rechercher)
+    test_rechercher = rechercher("stylo")
+    print(test_rechercher)

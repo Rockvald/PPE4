@@ -18,6 +18,7 @@ import requests
 import json
 import os
 import pickle
+import datetime
 
 def recupDonnee():
     commandespersonnel = []
@@ -40,6 +41,9 @@ def recupDonnee():
 
         donnee["nomEtat"] = etat["etat"]["nomEtat"]
         donnee["identifiant"] = donnee["id"]
+        # Modification des dates pour les rendre lisible
+        donnee["created_at"] = datetime.datetime(int(donnee["created_at"][0:4]), int(donnee["created_at"][5:7]), int(donnee["created_at"][8:10]), int(donnee["created_at"][11:13]), int(donnee["created_at"][14:16]), int(donnee["created_at"][17:19])).strftime("%H:%M:%S le %d-%m-%Y")
+        donnee["updated_at"] = datetime.datetime(int(donnee["updated_at"][0:4]), int(donnee["updated_at"][5:7]), int(donnee["updated_at"][8:10]), int(donnee["updated_at"][11:13]), int(donnee["updated_at"][14:16]), int(donnee["updated_at"][17:19])).strftime("%H:%M:%S le %d-%m-%Y")
 
         with open("data", "rb") as data:
             donnees_unpickle = pickle.Unpickler(data)
@@ -62,5 +66,5 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    recupDonnee = recupDonnee()
-    print(recupDonnee)
+    test_recupDonnee = recupDonnee()
+    print(test_recupDonnee)

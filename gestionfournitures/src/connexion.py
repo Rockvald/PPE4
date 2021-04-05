@@ -111,11 +111,11 @@ with open("env.json", "r") as env:
 
 
 if __name__ == "__main__":
-    connexion = connexion("admin@admin.fr", "admin")
-    print(connexion["connecter"], ", ", connexion["erreur"])
+    test_connexion = connexion("admin@admin.fr", "admin")
+    print(test_connexion["connecter"], ", ", test_connexion["erreur"])
 
-    verifconnexion = verifconnexion()
-    print(verifconnexion["connecter"], ", ", verifconnexion["erreur"])
+    test_verifconnexion = verifconnexion()
+    print(test_verifconnexion["connecter"], ", ", test_verifconnexion["erreur"])
 
-    deconnexion = deconnexion()
-    print(deconnexion["deconnecter"], ", ", deconnexion["erreur"])
+    test_deconnexion = deconnexion()
+    print(test_deconnexion["deconnecter"], ", ", test_deconnexion["erreur"])
