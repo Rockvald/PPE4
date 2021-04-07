@@ -37,10 +37,6 @@ Page {
             Action {
                 iconName: "system-log-out"
                 onTriggered: { deconnexion.sedeconnecter() }
-            },
-            Action {
-                iconName: "account"
-                onTriggered: { print('Test') }
             }
         ]
     }

@@ -17,9 +17,10 @@ ScrollView {
         id: demandeSpecifiqueListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: true
+        visible: page.demandeSpecifiqueVisible
 
         property var contenu
+        property bool valideur: false
 
         model: Models.DemandeSpecifiqueModel { }
         delegate: Components.DemandeSpecifiqueLayout { }
@@ -27,16 +28,38 @@ ScrollView {
         Python {
             Component.onCompleted: {
                 addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('accueil', function () {
+                    call('accueil.donneePersonnel', [], function (returnValue) {
+                        if (returnValue["idCategorie"] == 2) {
+                            demandeSpecifiqueListview.valideur = true
+                        }
+                    })
+                });
                 importModule('demandespecifique', function () {
                     call('demandespecifique.recupDonnee', [], function (returnValue) {
+                        if (demandeSpecifiqueListview.valideur) {
+                            section.visible = true
+                            mainheader.extension = section
+                            if (returnValue["aucunneDonneeUtilisateur"]) {
+                                aucunneDonneeUtilisateurListview.contenu = returnValue["demandesutilisateurs"]
+                                aucunneDonneeUtilisateurListview.model.ajouter(aucunneDonneeUtilisateurListview.contenu)
+                                page.page2 = "aucunneDonnee"
+                            } else {
+                                demandeValideListview.contenu = returnValue["demandesutilisateurs"]
+                                demandeValideListview.model.ajouter(demandeValideListview.contenu)
+                                page.page2 = "demande"
+                            }
+                        }
                         if (returnValue["aucunneDonnee"]) {
-                            demandeSpecifiqueListview.visible = false
-                            aucunneDonneeListview.visible = true
                             aucunneDonneeListview.contenu = returnValue["demandespersonnel"]
                             aucunneDonneeListview.model.ajouter(aucunneDonneeListview.contenu)
+                            page.page1 = "aucunneDonnee"
+                            page.aucunneDonneeVisible = true
                         } else {
                             demandeSpecifiqueListview.contenu = returnValue["demandespersonnel"]
                             demandeSpecifiqueListview.model.ajouter(demandeSpecifiqueListview.contenu)
+                            page.page1 = "demande"
+                            page.demandeSpecifiqueVisible = true
                         }
                     })
                 });
@@ -52,7 +75,31 @@ ScrollView {
         id: aucunneDonneeListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: false
+        visible: page.aucunneDonneeVisible
+
+        property var contenu
+
+        model: Models.AucunneDonneeModel { }
+        delegate: Components.AucunneDonneeLayout { }
+    }
+
+    ListView {
+        id: demandeValideListview
+        anchors.top: parent.top
+        anchors.topMargin: mainheader.height
+        visible: page.demandeValideVisible
+
+        property var contenu
+
+        model: Models.DemandeValideModel { }
+        delegate: Components.DemandeValideLayout { }
+    }
+
+    ListView {
+        id: aucunneDonneeUtilisateurListview
+        anchors.top: parent.top
+        anchors.topMargin: mainheader.height
+        visible: page.aucunneDonneeUtilisateurVisible
 
         property var contenu
 

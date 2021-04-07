@@ -50,7 +50,11 @@ MainView {
                 Action {
                     id: navigation_menu
                     iconName: "navigation-menu"
-                    onTriggered: { menuLoader.active = true }
+                    onTriggered: {
+                        menuLoader.active = true
+                        section.visible = false
+                        mainheader.extension = vide
+                    }
                 }
             ]
 
@@ -63,8 +67,51 @@ MainView {
                     onTriggered: { PopupUtils.open(fenetreRecherche) }
                 }
             ]
+            extension: Rectangle { id: vide }
+            Sections {
+                id: section
+                visible: false
+                actions: [
+                    Action {
+                        text: "Demandes personnel"
+                        onTriggered: {
+                            if (page.page1 == "demande") {
+                                page.demandeSpecifiqueVisible = true
+                            } else {
+                                page.aucunneDonneeVisible = true
+                            }
+                            if (page.page2 == "demande") {
+                                page.demandeValideVisible = false
+                            } else {
+                                page.aucunneDonneeUtilisateurVisible = false
+                            }
+                        }
+                    },
+                    Action {
+                        text: "Demandes utilisateurs"
+                        onTriggered: {
+                            if (page.page1 == "demande") {
+                                page.demandeSpecifiqueVisible = false
+                            } else {
+                                page.aucunneDonneeVisible = false
+                            }
+                            if (page.page2 == "demande") {
+                                page.demandeValideVisible = true
+                            } else {
+                                page.aucunneDonneeUtilisateurVisible = true
+                            }
+                        }
+                    }
+                ]
+            }
         }
 
+        property string page1: ""
+        property string page2: ""
+        property bool demandeSpecifiqueVisible: false
+        property bool demandeValideVisible: false
+        property bool aucunneDonneeVisible: false
+        property bool aucunneDonneeUtilisateurVisible: false
         property string message: "Essai"
 
         Component {
