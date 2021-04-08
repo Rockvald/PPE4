@@ -70,35 +70,40 @@ MainView {
             extension: Rectangle { id: vide }
             Sections {
                 id: section
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
                 visible: false
                 actions: [
                     Action {
-                        text: "Demandes personnel"
+                        text: page.titrePage1
                         onTriggered: {
-                            if (page.page1 == "demande") {
-                                page.demandeSpecifiqueVisible = true
+                            if (page.page1 != "aucunneDonnee") {
+                                page.element1Visible = true
                             } else {
-                                page.aucunneDonneeVisible = true
+                                page.element2Visible = true
                             }
-                            if (page.page2 == "demande") {
-                                page.demandeValideVisible = false
+                            if (page.page2 != "aucunneDonnee") {
+                                page.element3Visible = false
                             } else {
-                                page.aucunneDonneeUtilisateurVisible = false
+                                page.element4Visible = false
                             }
                         }
                     },
                     Action {
-                        text: "Demandes utilisateurs"
+                        text: page.titrePage2
                         onTriggered: {
-                            if (page.page1 == "demande") {
-                                page.demandeSpecifiqueVisible = false
+                            if (page.page1 != "aucunneDonnee") {
+                                page.element1Visible = false
                             } else {
-                                page.aucunneDonneeVisible = false
+                                page.element2Visible = false
                             }
-                            if (page.page2 == "demande") {
-                                page.demandeValideVisible = true
+                            if (page.page2 != "aucunneDonnee") {
+                                page.element3Visible = true
                             } else {
-                                page.aucunneDonneeUtilisateurVisible = true
+                                page.element4Visible = true
                             }
                         }
                     }
@@ -108,10 +113,12 @@ MainView {
 
         property string page1: ""
         property string page2: ""
-        property bool demandeSpecifiqueVisible: false
-        property bool demandeValideVisible: false
-        property bool aucunneDonneeVisible: false
-        property bool aucunneDonneeUtilisateurVisible: false
+        property string titrePage1: ""
+        property string titrePage2: ""
+        property bool element1Visible: false
+        property bool element2Visible: false
+        property bool element3Visible: false
+        property bool element4Visible: false
         property string message: "Essai"
 
         Component {

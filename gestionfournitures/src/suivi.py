@@ -22,10 +22,20 @@ import datetime
 
 def recupDonnee():
     commandespersonnel = []
+    commandesutilisateurs = []
     aucunneDonnee = False
+    aucunneDonneeUtilisateur = False
     try:
         reponse = requests.get("http://{url}/PPE3/Application/server.php/api/liste/commandes".format(url = url))
         commandes = reponse.json()
+    except:
+        erreur = "Données non trouvé"
+        aucunneDonnee = True
+        return {"erreur": erreur, "aucunneDonnee": aucunneDonnee}
+
+    try:
+        reponse = requests.get("http://{url}/PPE3/Application/server.php/api/liste/personnels".format(url = url))
+        personnels = reponse.json()
     except:
         erreur = "Données non trouvé"
         aucunneDonnee = True
@@ -49,6 +59,12 @@ def recupDonnee():
             donnees_unpickle = pickle.Unpickler(data)
             donnee_enregistre = donnees_unpickle.load()
 
+        if donnee_enregistre["idCategorie"] == 2:
+            for personnel in personnels["data"]:
+                if donnee_enregistre["idService"] == personnel["idService"] and personnel["id"] == donnee["idPersonnel"]:
+                    donnee["nom"] = personnel["nom"]
+                    donnee["prenom"] = personnel["prenom"]
+                    commandesutilisateurs.append(donnee)
         if donnee_enregistre["id"] == donnee["idPersonnel"]:
             commandespersonnel.append(donnee)
 
@@ -56,7 +72,11 @@ def recupDonnee():
         aucunneDonnee = True
         commandespersonnel.append({"titre": "Commandes :", "description": "Vous n'avez pas encore effectué de commandes."})
 
-    return {"commandespersonnel": commandespersonnel, "aucunneDonnee": aucunneDonnee}
+    if commandesutilisateurs == []:
+        aucunneDonneeUtilisateur = True
+        commandesutilisateurs.append({"titre": "Commandes utilisateurs :", "description": "Vous n'avez pas de commandes d'utilisateurs."})
+
+    return {"commandespersonnel": commandespersonnel, "commandesutilisateurs": commandesutilisateurs, "aucunneDonnee": aucunneDonnee, "aucunneDonneeUtilisateur": aucunneDonneeUtilisateur}
 
 
 #os.chdir("src")

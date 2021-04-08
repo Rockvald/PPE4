@@ -17,7 +17,7 @@ ScrollView {
         id: demandeSpecifiqueListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: page.demandeSpecifiqueVisible
+        visible: page.element1Visible
 
         property var contenu
         property bool valideur: false
@@ -39,6 +39,8 @@ ScrollView {
                     call('demandespecifique.recupDonnee', [], function (returnValue) {
                         if (demandeSpecifiqueListview.valideur) {
                             section.visible = true
+                            page.titrePage1 = "Demandes personnel"
+                            page.titrePage2 = "Demandes utilisateurs"
                             mainheader.extension = section
                             if (returnValue["aucunneDonneeUtilisateur"]) {
                                 aucunneDonneeUtilisateurListview.contenu = returnValue["demandesutilisateurs"]
@@ -54,12 +56,12 @@ ScrollView {
                             aucunneDonneeListview.contenu = returnValue["demandespersonnel"]
                             aucunneDonneeListview.model.ajouter(aucunneDonneeListview.contenu)
                             page.page1 = "aucunneDonnee"
-                            page.aucunneDonneeVisible = true
+                            page.element2Visible = true
                         } else {
                             demandeSpecifiqueListview.contenu = returnValue["demandespersonnel"]
                             demandeSpecifiqueListview.model.ajouter(demandeSpecifiqueListview.contenu)
                             page.page1 = "demande"
-                            page.demandeSpecifiqueVisible = true
+                            page.element1Visible = true
                         }
                     })
                 });
@@ -75,7 +77,7 @@ ScrollView {
         id: aucunneDonneeListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: page.aucunneDonneeVisible
+        visible: page.element2Visible
 
         property var contenu
 
@@ -87,7 +89,7 @@ ScrollView {
         id: demandeValideListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: page.demandeValideVisible
+        visible: page.element3Visible
 
         property var contenu
 
@@ -99,7 +101,7 @@ ScrollView {
         id: aucunneDonneeUtilisateurListview
         anchors.top: parent.top
         anchors.topMargin: mainheader.height
-        visible: page.aucunneDonneeUtilisateurVisible
+        visible: page.element4Visible
 
         property var contenu
 
