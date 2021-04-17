@@ -78,6 +78,36 @@ def recupDonnee():
 
     return {"demandespersonnel": demandespersonnel, "demandesutilisateurs": demandesutilisateurs, "aucunneDonnee": aucunneDonnee, "aucunneDonneeUtilisateur": aucunneDonneeUtilisateur}
 
+def valider(idDemande, index):
+    try:
+        reponse = requests.put("http://{url}/PPE3/Application/server.php/api/modifier/demande/{id}".format(url = url, id = idDemande), data = json.dumps({ "idEtat": 2 }))
+        message = reponse.json()["message"]
+    except:
+        message = "La mise à jour de la quantitée à échouer !"
+        idEtat = 1
+        nomEtat = "Prise en compte"
+        return {"message": message, "idEtat": idEtat, "nomEtat": nomEtat, "index": index}
+
+    try:
+        reponse = requests.get("http://{url}/PPE3/Application/server.php/api/demande/{id}".format(url = url, id = idDemande))
+        idEtat = reponse.json()["demande"]["idEtat"]
+    except:
+        message = "Données non trouvé"
+        idEtat = 1
+        nomEtat = "Prise en compte"
+        return {"message": message, "idEtat": idEtat, "nomEtat": nomEtat, "index": index}
+
+    try:
+        reponse = requests.get("http://{url}/PPE3/Application/server.php/api/etat/{id}".format(url = url, id = idEtat))
+        nomEtat = reponse.json()["etat"]["nomEtat"]
+    except:
+        message = "Données non trouvé"
+        idEtat = 1
+        nomEtat = "Prise en compte"
+        return {"message": message, "idEtat": idEtat, "nomEtat": nomEtat, "index": index}
+
+    return {"message": message, "idEtat": idEtat, "nomEtat": nomEtat, "index": index}
+
 
 #os.chdir("src")
 with open("env.json", "r") as env:
@@ -88,3 +118,6 @@ with open("env.json", "r") as env:
 if __name__ == "__main__":
     test_recupDonnee = recupDonnee()
     print(test_recupDonnee)
+
+    test_valider = valider(1, 1)
+    print(test_valider)

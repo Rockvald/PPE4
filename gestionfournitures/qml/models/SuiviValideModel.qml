@@ -27,4 +27,8 @@ ListModel {
         suiviValideModel.append(contenu)
         suiviValideModel.remove(0)
     }
+
+    function modifier(index, nom, valeur) {
+        suiviValideModel.setProperty(index, nom, valeur)
+    }
 }

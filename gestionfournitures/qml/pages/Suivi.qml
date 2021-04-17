@@ -95,6 +95,25 @@ ScrollView {
 
         model: Models.SuiviValideModel { }
         delegate: Components.SuiviValideLayout { }
+
+        Python {
+            id: python
+            function valider(idCommande, index) {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('suivi', function () {
+                    call('suivi.valider', [idCommande, index], function (returnValue) {
+                        commandeValideListview.model.modifier(returnValue["index"], "idEtat", returnValue["idEtat"])
+                        commandeValideListview.model.modifier(returnValue["index"], "nomEtat", returnValue["nomEtat"])
+                        page.message = returnValue['message']
+                        PopupUtils.open(fenetreMessage)
+                    })
+                });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
+            }
+        }
     }
 
     ListView {

@@ -104,25 +104,32 @@ ListItem {
                         text: model.updated_at
                     }
                 }
-            }
 
-            Button {
-                text: "Valider"
-                color: "#cdcdcd"
-                onClicked: PopupUtils.close(fenetre)
-                visible: {
-                    if (model.nomEtat == "Prise en compte") {
-                        return true;
-                    } else {
-                        return false;
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: units.gu(3)
+                    Button {
+                        text: "Valider"
+                        color: "#cdcdcd"
+                        onClicked: {
+                            python.valider(model.identifiant, index)
+                            PopupUtils.close(fenetre)
+                        }
+                        visible: {
+                            if (model.nomEtat == "Prise en compte") {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                    Button {
+                        text: "Fermer"
+                        color: "#cdcdcd"
+                        onClicked: PopupUtils.close(fenetre)
                     }
                 }
-            }
-
-            Button {
-                text: "Fermer"
-                color: "#cdcdcd"
-                onClicked: PopupUtils.close(fenetre)
             }
         }
     }

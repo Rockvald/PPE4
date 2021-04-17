@@ -27,4 +27,8 @@ ListModel {
         demandeValideModel.append(contenu)
         demandeValideModel.remove(0)
     }
+
+    function modifier(index, nom, valeur) {
+        demandeValideModel.setProperty(index, nom, valeur)
+    }
 }

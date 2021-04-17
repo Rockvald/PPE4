@@ -95,6 +95,25 @@ ScrollView {
 
         model: Models.DemandeValideModel { }
         delegate: Components.DemandeValideLayout { }
+
+        Python {
+            id: python
+            function valider(idDemande, index) {
+                addImportPath(Qt.resolvedUrl('../../src/'));
+                importModule('demandespecifique', function () {
+                    call('demandespecifique.valider', [idDemande, index], function (returnValue) {
+                        demandeValideListview.model.modifier(returnValue["index"], "idEtat", returnValue["idEtat"])
+                        demandeValideListview.model.modifier(returnValue["index"], "nomEtat", returnValue["nomEtat"])
+                        page.message = returnValue['message']
+                        PopupUtils.open(fenetreMessage)
+                    })
+                });
+            }
+
+            onError: {
+                console.log('python error: ' + traceback);
+            }
+        }
     }
 
     ListView {
