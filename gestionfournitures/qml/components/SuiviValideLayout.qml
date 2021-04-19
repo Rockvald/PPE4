@@ -112,11 +112,59 @@ ListItem {
                         text: "Valider"
                         color: "#cdcdcd"
                         onClicked: {
-                            python.valider(model.identifiant, index)
+                            python.valider(model.identifiant, 2, index)
                             PopupUtils.close(fenetre)
                         }
                         visible: {
-                            if (model.nomEtat == "Prise en compte") {
+                            if (model.nomEtat == "Prise en compte" && suiviListview.valideur) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                    Button {
+                        text: "En cours"
+                        color: "#cdcdcd"
+                        onClicked: {
+                            python.valider(model.identifiant, 3, index)
+                            PopupUtils.close(fenetre)
+                        }
+                        visible: {
+                            if (model.nomEtat == "Validé" && suiviListview.admin) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                    Button {
+                        text: "Livré"
+                        color: "#cdcdcd"
+                        onClicked: {
+                            python.valider(model.identifiant, 4, index)
+                            PopupUtils.close(fenetre)
+                        }
+                        visible: {
+                            if (model.nomEtat == "En cours" && suiviListview.admin) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+
+                    Button {
+                        text: "Annulé"
+                        color: "#cdcdcd"
+                        onClicked: {
+                            python.valider(model.identifiant, 5, index)
+                            PopupUtils.close(fenetre)
+                        }
+                        visible: {
+                            if (model.nomEtat == "En cours" && suiviListview.admin) {
                                 return true;
                             } else {
                                 return false;

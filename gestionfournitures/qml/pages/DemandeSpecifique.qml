@@ -21,6 +21,7 @@ ScrollView {
 
         property var contenu
         property bool valideur: false
+        property bool admin: false
 
         model: Models.DemandeSpecifiqueModel { }
         delegate: Components.DemandeSpecifiqueLayout { }
@@ -32,12 +33,14 @@ ScrollView {
                     call('accueil.donneePersonnel', [], function (returnValue) {
                         if (returnValue["idCategorie"] == 2) {
                             demandeSpecifiqueListview.valideur = true
+                        } else if (returnValue["idCategorie"] == 3) {
+                            demandeSpecifiqueListview.admin = true
                         }
                     })
                 });
                 importModule('demandespecifique', function () {
                     call('demandespecifique.recupDonnee', [], function (returnValue) {
-                        if (demandeSpecifiqueListview.valideur) {
+                        if (demandeSpecifiqueListview.valideur || demandeSpecifiqueListview.admin) {
                             section.visible = true
                             page.titrePage1 = "Demandes personnel"
                             page.titrePage2 = "Demandes utilisateurs"
@@ -98,10 +101,10 @@ ScrollView {
 
         Python {
             id: python
-            function valider(idDemande, index) {
+            function valider(idDemande, nouveauIdEtat, index) {
                 addImportPath(Qt.resolvedUrl('../../src/'));
                 importModule('demandespecifique', function () {
-                    call('demandespecifique.valider', [idDemande, index], function (returnValue) {
+                    call('demandespecifique.valider', [idDemande, nouveauIdEtat, index], function (returnValue) {
                         demandeValideListview.model.modifier(returnValue["index"], "idEtat", returnValue["idEtat"])
                         demandeValideListview.model.modifier(returnValue["index"], "nomEtat", returnValue["nomEtat"])
                         page.message = returnValue['message']

@@ -21,6 +21,7 @@ ScrollView {
 
         property var contenu
         property bool valideur: false
+        property bool admin: false
 
         model: Models.SuiviModel { }
         delegate: Components.SuiviLayout { }
@@ -32,12 +33,14 @@ ScrollView {
                     call('accueil.donneePersonnel', [], function (returnValue) {
                         if (returnValue["idCategorie"] == 2) {
                             suiviListview.valideur = true
+                        }else if (returnValue["idCategorie"] == 3) {
+                            suiviListview.admin = true
                         }
                     })
                 });
                 importModule('suivi', function () {
                     call('suivi.recupDonnee', [], function (returnValue) {
-                        if (suiviListview.valideur) {
+                        if (suiviListview.valideur || suiviListview.admin) {
                             section.visible = true
                             page.titrePage1 = "Commandes personnel"
                             page.titrePage2 = "Commandes utilisateurs"
@@ -98,10 +101,10 @@ ScrollView {
 
         Python {
             id: python
-            function valider(idCommande, index) {
+            function valider(idCommande, nouveauIdEtat, index) {
                 addImportPath(Qt.resolvedUrl('../../src/'));
                 importModule('suivi', function () {
-                    call('suivi.valider', [idCommande, index], function (returnValue) {
+                    call('suivi.valider', [idCommande, nouveauIdEtat, index], function (returnValue) {
                         commandeValideListview.model.modifier(returnValue["index"], "idEtat", returnValue["idEtat"])
                         commandeValideListview.model.modifier(returnValue["index"], "nomEtat", returnValue["nomEtat"])
                         page.message = returnValue['message']

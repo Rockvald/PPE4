@@ -65,6 +65,12 @@ def recupDonnee():
                     donnee["nom"] = personnel["nom"]
                     donnee["prenom"] = personnel["prenom"]
                     demandesutilisateurs.append(donnee)
+        if donnee_enregistre["idCategorie"] == 3:
+            for personnel in personnels["data"]:
+                if personnel["id"] == donnee["idPersonnel"]:
+                    donnee["nom"] = personnel["nom"]
+                    donnee["prenom"] = personnel["prenom"]
+                    demandesutilisateurs.append(donnee)
         if donnee_enregistre["id"] == donnee["idPersonnel"]:
             demandespersonnel.append(donnee)
 
@@ -78,9 +84,10 @@ def recupDonnee():
 
     return {"demandespersonnel": demandespersonnel, "demandesutilisateurs": demandesutilisateurs, "aucunneDonnee": aucunneDonnee, "aucunneDonneeUtilisateur": aucunneDonneeUtilisateur}
 
-def valider(idDemande, index):
+
+def valider(idDemande, nouveauIdEtat, index):
     try:
-        reponse = requests.put("http://{url}/PPE3/Application/server.php/api/modifier/demande/{id}".format(url = url, id = idDemande), data = json.dumps({ "idEtat": 2 }))
+        reponse = requests.put("http://{url}/PPE3/Application/server.php/api/modifier/demande/{id}".format(url = url, id = idDemande), data = json.dumps({ "idEtat": nouveauIdEtat }))
         message = reponse.json()["message"]
     except:
         message = "La mise à jour de la quantitée à échouer !"

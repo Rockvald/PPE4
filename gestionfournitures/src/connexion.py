@@ -100,6 +100,10 @@ def deconnexion():
         return {"deconnecter": deconnecter, "erreur": erreur}
 
 
+def recupUrl():
+    return url
+
+
 os.chdir("src")
 with open("env.json", "r") as env:
     donnee = json.load(env)
