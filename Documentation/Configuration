@@ -1,1 +1,43 @@
--- En cours de rédaction --
+Prérequis :
+
+- Un environnement ubuntu ou une vm ubuntu
+- L'application web de mon PPE 3, disponible à l'adresse : https://github.com/Rockvald/PPE3
+
+
+
+Installation :
+
+Il faut tous d'abord installer docker, adb, git, python3 and pip3 :
+
+sudo apt install docker.io adb git python3 python3-pip python3-setuptools
+
+
+Puis installer le système de méta constrution Clickable :
+
+pip3 install --user --upgrade clickable-ut
+
+
+Ajouter le chemin "~/.local/bin" à la variable d'environnement PATH:
+
+echo 'export PATH="$PATH:~/.local/bin"' >> ~/.bashrc
+
+Ouvrir ensuite un nouveau terminal pour que les changements soit pris en compte.
+
+
+Puis lancer la commande suivante pour que Clickable se configure :
+
+clickable setup
+
+
+
+Configuration de l'url de l'API :
+
+Pour modifier l'url utiliser par l'API, aller dans le dossier gestionfournitures/src/, puis ouvrer le fichier env.json et remplacer localhost par une adresse ip ou un nom de domaine.
+
+
+
+Lancement de l'application :
+
+Il faut se rendre dans le dossier gestionfournitures/ avec un terminal, puis pour démarrer l'application sur votre ordianteur, lancer la commande :
+
+clickable desktop

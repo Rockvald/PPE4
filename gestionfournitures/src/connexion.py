@@ -59,7 +59,7 @@ def verifconnexion():
         erreur = "Pas de données enregistré !"
         return {"connecter": connecter, "erreur": erreur}
 
-    # Récupération des données de connexion enregistré et encodage du mot de passe
+    # Récupération des données de connexion enregistré
     try:
         mail_enregistre = donnee_enregistre["mail"]
         mdp_enregistre = donnee_enregistre["pass"]
@@ -98,10 +98,6 @@ def deconnexion():
         deconnecter = False
         erreur = "Le fichier n'éxiste pas ou est un dossier"
         return {"deconnecter": deconnecter, "erreur": erreur}
-
-
-def recupUrl():
-    return url
 
 
 os.chdir("src")
