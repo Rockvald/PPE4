@@ -1,6 +1,6 @@
 [Desktop Entry]
 _Name=Gestion Fournitures
-Exec=qmlscene %U qml/Main.qml
+Exec=qmlscene qml/Main.qml
 Icon=assets/logo.png
 Terminal=false
 Type=Application

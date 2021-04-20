@@ -45,6 +45,9 @@ def modifier(idPersonnel, nom, prenom, mail, mdp, verifMdp):
     if mdp != verifMdp:
         erreur = "Les mots de passe sont différents !"
         return erreur
+    if mdp == "":
+        erreur = "Veuillez donner un mots de passe !"
+        return erreur
 
     mdp_fourni = hashlib.sha256(mdp.encode())
     if mdp_fourni.hexdigest() != donnee_enregistre["pass"]:

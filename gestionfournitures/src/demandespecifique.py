@@ -126,5 +126,5 @@ if __name__ == "__main__":
     test_recupDonnee = recupDonnee()
     print(test_recupDonnee)
 
-    test_valider = valider(1, 1)
+    test_valider = valider(1, 2, 1)
     print(test_valider)

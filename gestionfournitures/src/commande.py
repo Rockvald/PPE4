@@ -25,6 +25,26 @@ def commander(idFournitures, nomFournitures, quantiteDemande, quantiteDisponible
         donnee_enregistre = donnees_unpickle.load()
 
     try:
+        reponse = requests.get("http://{url}/PPE3/Application/server.php/api/fourniture/{id}".format(url = url, id = idFournitures))
+        fourniture = reponse.json()
+    except:
+        message = "Données non trouvé"
+        quantiteDisponible = quantiteDisponible
+        return {"message": message, "quantiteDisponible": quantiteDisponible, "index": index}
+
+    try:
+        reponse = requests.get("http://{url}/PPE3/Application/server.php/api/fourniture/{id}".format(url = url, id = idFournitures))
+        quantiteDisponibleFourniture = reponse.json()["fourniture"]["quantiteDisponible"]
+    except:
+        erreur = "Données non trouvé"
+        return {"message": message, "quantiteDisponible": quantiteDisponible, "index": index}
+
+    if fourniture["fourniture"]["quantiteDisponible"] <= 0:
+        message = "Cette fourniture n'est plus disponible"
+        quantiteDisponible = quantiteDisponibleFourniture
+        return {"message": message, "quantiteDisponible": quantiteDisponible, "index": index}
+
+    try:
         reponse = requests.post("http://{url}/PPE3/Application/server.php/api/creer/commande".format(url = url), data = json.dumps({
             "nomCommandes": nomFournitures,
             "quantiteDemande": quantiteDemande,
