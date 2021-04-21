@@ -27,6 +27,13 @@ ScrollView {
             id: python
             Component.onCompleted: {
                 addImportPath(Qt.resolvedUrl('../../src/'));
+
+                importModule('connexion', function () {
+                    call('connexion.recupUrl', [], function (returnValue) {
+                        accueilListview.url = returnValue
+                    })
+                });
+
                 importModule('accueil', function () {
                     call('accueil.recupDonnee', [], function (returnValue) {
                         accueilListview.contenu = returnValue
